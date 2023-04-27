@@ -26,7 +26,7 @@ import { AdminGuard } from '../auth/guards/admin.guard';
     MatIconModule,
     MatButtonModule,
     MatListModule,
-    AlumnosModule,
+    //AlumnosModule,
     CursosModule,
     RouterModule.forChild([
       {
