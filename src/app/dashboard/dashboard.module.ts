@@ -26,29 +26,16 @@ import { AdminGuard } from '../auth/guards/admin.guard';
     MatIconModule,
     MatButtonModule,
     MatListModule,
-    //AlumnosModule,
-    CursosModule,
     RouterModule.forChild([
       {
         // http://localhost:XXXX/dashboard/estudiantes
         path: 'estudiantes',
         loadChildren: () => import('./pages/alumnos/alumnos.module').then((m) => m.AlumnosModule)
-        // children: [
-        //   {
-        //     // dashboard/estudiantes
-        //     path: '',
-        //     component: AlumnosComponent,
-        //   },
-        //   {
-        //     // dashboard/estudiantes/:id
-        //     path: ':id',
-        //     component: AlumnoDetalleComponent
-        //   }
-        // ]
+       
       },
       {
         path: 'cursos',
-        component: CursosComponent,
+        loadChildren: () => import('./pages/cursos/cursos.module').then((m) => m.CursosModule)
       }
     ])
   ],
