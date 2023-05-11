@@ -17,9 +17,8 @@ export class AuthService {
   private authUser$ = new BehaviorSubject<Usuario | null>(null);
 
   constructor(
-    private router: Router
-    private httpClient: HttpClient,
-
+    private router: Router,
+    private httpClient: HttpClient
   ) { }
 
   obtenerUsuarioAutenticado(): Observable<Usuario | null> {
@@ -93,10 +92,11 @@ export class AuthService {
           this.authUser$.next(usuarioAutenticado);
         } 
         return !!usuarioAutenticado;
-      })
-      catchError((err) => {
+      }),
+      catchError ((err) => {
         alert('Vuelva a intentarlo')
-        return throwError(err);
+        return of(false);
+        //return throwError(err);
       })
     )
   }
