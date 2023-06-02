@@ -53,7 +53,7 @@ describe('Pruebas del LoginComponent', () =>{
         component.onSubmit();
 
         expect(component.emailControl.touched).toBeTrue();
-        expect(component.password.touched).toBeTrue();
+        expect(component.passwordControl.touched).toBeTrue();
         expect(spyOnMarkAllAsTouched).toHaveBeenCalled();
     });
     it('Si el loginForm es validateHorizontalPosition, debe llamar al metodo login del AuthService',() => {

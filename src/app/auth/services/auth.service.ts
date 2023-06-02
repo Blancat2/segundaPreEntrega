@@ -1,9 +1,15 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, Pipe } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, map, catchError, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, map, catchError, throwError, of } from 'rxjs';
 import { Usuario } from 'src/app/core/models';
+import { AppState } from 'src/app/store';
 import { enviroment } from 'src/environments/environments';
+import {Store} from '@ngrx/store'
+import { EstablecerUsuarioAutenticado, SacarUsuarioAutenticado } from 'src/app/store/auth.actions';
+import { selectAuthState, selectAuthUser } from 'src/app/store/auth.selectors';
+
+
 export interface LoginFormValue {
   email: string;
   password: string;
@@ -14,28 +20,24 @@ export interface LoginFormValue {
 })
 export class AuthService {
 
-  private authUser$ = new BehaviorSubject<Usuario | null>(null);
+  //private authUser$ = new BehaviorSubject<Usuario | null>(null);
 
   constructor(
     private router: Router,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private store: Store<AppState>
   ) { }
 
   obtenerUsuarioAutenticado(): Observable<Usuario | null> {
-    return this.authUser$.asObservable();
+    return this.store.select(selectAuthUser);
+  }
+
+  establecerUsuarioAutenticado(usuario: Usuario, token: string): void{
+    this.store.dispatch(EstablecerUsuarioAutenticado({ payload: {...usuario, token } } ) )
   }
 
   login(formValue: LoginFormValue): void {
-  //   //const usuario: Usuario = {
-  //   //  id: 1,
-  //   //  nombre: 'MOCK',
-  //   //  apellido: 'USER',
-  //     email: formValue.email,
-  //     role: 'user'
-  //   }
-  //   localStorage.setItem('auth-user', JSON.stringify(usuario));
-  //   this.authUser$.next(usuario);
-  //   this.router.navigate(['dashboard']);
+
     this.httpClient.get<Usuario[]>(
       `${enviroment.apiBaseUrl}/usuarios`,
       {
@@ -43,12 +45,12 @@ export class AuthService {
           ...formValue
         }
       }
-    ).subscibe({
+    ).subscribe({
       next: (usuarios) => {
         const usuarioAutenticado = usuarios[0];
         if (usuarioAutenticado) {
           localStorage.setItem('token', usuarioAutenticado.token)
-          this.authUser$.next(usuarioAutenticado);
+          this.establecerUsuarioAutenticado(usuarioAutenticado, usuarioAutenticado.token);
           this.router.navigate(['dashboard']);
         } else {
           alert('Usuario y contraseña incorrectos')
@@ -59,17 +61,12 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('auth-user');
-    this.authUser$.next(null);
+    //this.authUser$.next(null);
+    this.store.dispatch(SacarUsuarioAutenticado());
     this.router.navigate(['auth']);
   }
 
-  verificarStorage(): void {
-    const storageValor = localStorage.getItem('auth-user');
-    if (storageValor) {
-      const usuario = JSON.parse(storageValor);
-      this.authUser$.next(usuario);
-    }
-  }
+
 
   verificarToken(): Observable<boolean>{
     const token = localStorage.getItem('token');
@@ -89,7 +86,7 @@ export class AuthService {
         const usuarioAutenticado = usuarios[0];
         if (usuarioAutenticado) {
           localStorage.setItem('token', usuarioAutenticado.token)
-          this.authUser$.next(usuarioAutenticado);
+          this.establecerUsuarioAutenticado(usuarioAutenticado, usuarioAutenticado.token)
         } 
         return !!usuarioAutenticado;
       }),
