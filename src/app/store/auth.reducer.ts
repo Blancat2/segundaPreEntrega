@@ -21,8 +21,8 @@ export const authReducer = createReducer(
 
     on(EstablecerUsuarioAutenticado, (currentState, action) => {
         return{
-            authUser: action.payload
-            token: payload.token,
+            authUser: action.payload,
+            token: action.payload.token,
         }
     }),
 

@@ -16,7 +16,6 @@ export class CursosComponent implements OnInit {
 
   displayedColumns = [
     'id',
-    'nombre',
     'fecha_inicio',
     'fecha_fin',
     'detalle',

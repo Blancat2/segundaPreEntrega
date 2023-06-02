@@ -5,19 +5,19 @@ import { CrearCursoPayload, Curso } from '../models';
 const CURSOS_MOCKS: Curso[] = [
   {
     id: 1,
-    nombre: 'Angular',
+    materiaId: 1,
     fecha_fin: new Date(),
     fecha_inicio: new Date(),
   },
   {
     id: 2,
-    nombre: 'Javascript',
+    materiaId: 2,
     fecha_fin: new Date(),
     fecha_inicio: new Date(),
   },
   {
     id: 3,
-    nombre: 'Desarrollo Web',
+    materiaId: 3,
     fecha_fin: new Date(),
     fecha_inicio: new Date(),
   },

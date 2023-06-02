@@ -11,9 +11,82 @@
         }
     ],
     "cursos": [
+        {
+            "id": 1,
+            "materiaId": 1,
+            "fecha_fin": "2023-04-27T01:27:59.631Z",
+            "fecha_inicio": "2023-04-27T01:27:59.631Z"
+          },
+          {
+            "id": 2,
+            "materiaId": 2,
+            "fecha_fin": "2023-04-27T01:27:59.631Z",
+            "fecha_inicio": "2023-04-27T01:27:59.631Z"
+          },
+          {
+            "id": 3,
+            "materiaId": 3,
+            "fecha_fin": "2023-04-27T01:27:59.631Z",
+            "fecha_inicio": "2023-04-27T01:27:59.631Z"
+          }
+
+
 
     ],
-    "inscripciones": [
-        
-    ]
+    "materias": [
+        {
+          "id": 1,
+          "nombre": "Angular",
+          "descripcion": "Curso de Angular con duración de 2 meses."
+        },
+        {
+          "id": 2,
+          "nombre": "Desarrollo Web"
+        },
+        {
+          "id": 3,
+          "nombre": "Desarrollo Javascript"
+        }
+      ],
+      "inscripciones": [
+        {
+          "id": 2,
+          "materiaId": 2,
+          "alumnoId": 1,
+          "cursoId": 2
+        },
+        {
+          "materiaId": 1,
+          "alumnoId": 3,
+          "cursoId": 1,
+          "id": 3
+        },
+        {
+          "materiaId": 1,
+          "alumnoId": 3,
+          "cursoId": 1,
+          "id": 4
+        },
+        {
+          "materiaId": 2,
+          "alumnoId": 1,
+          "cursoId": 2,
+          "id": 5
+        }
+      ],
+      "alumnos": [
+        {
+          "id": 3,
+          "nombre": "Susana",
+          "apellido": "Rodriguez",
+          "fecha_registro": "2023-04-27T01:27:59.631Z"
+        },
+        {
+          "id": 1,
+          "nombre": "Pablo",
+          "apellido": "Gonzalez",
+          "fecha_registro": "2023-04-27T01:27:59.631Z"
+        }
+      ]
+    
 }
