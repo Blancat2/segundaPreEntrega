@@ -22,7 +22,7 @@ export class InscripcionesComponent implements OnInit{
     private matDialog: MatDialog,
     private store: Store,
   ) {
-  this.state$ = this,store.select(selectInscripcionesState);
+    this.state$ = this.store.select(selectInscripcionesState)
   }
   ngOnInit(): void {
     this.store.dispatch(InscripcionesActions.loadInscripciones());
