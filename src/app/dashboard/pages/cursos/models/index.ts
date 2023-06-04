@@ -7,6 +7,8 @@ export interface Curso {
   fecha_fin: Date;
 }
 
+
+
 export interface CursoWithMateria extends Curso {
   materia: Materia;
 

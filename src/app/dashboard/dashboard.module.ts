@@ -16,7 +16,7 @@ import { AdminGuard } from '../auth/guards/admin.guard';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -28,7 +28,7 @@ import { AdminGuard } from '../auth/guards/admin.guard';
     MatListModule,
     RouterModule.forChild([
       {
-        // http://localhost:XXXX/dashboard/estudiantes
+
         path: 'estudiantes',
         loadChildren: () => import('./pages/alumnos/alumnos.module').then((m) => m.AlumnosModule)
        

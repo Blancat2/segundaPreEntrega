@@ -1,7 +1,8 @@
-interface NavItem {
+export interface NavItem {
   path: string;
   title: string;
   icon?: string;
+  rolesPermitidos: string[];
 }
 
 const links: NavItem[] = [
@@ -9,17 +10,20 @@ const links: NavItem[] = [
     path: 'estudiantes',
     title: 'Estudiantes',
     icon: 'person',
+    rolesPermitidos: [],
   },
   {
     path: 'cursos',
     title: 'Cursos',
-    icon: 'school'
+    icon: 'school',
+    rolesPermitidos: ['admin'],
 
   },
   {
     path: 'inscripciones',
     title: 'inscripciones',
-    icon: 'book'
+    icon: 'book',
+    rolesPermitidos: [],
     
   },
 ]

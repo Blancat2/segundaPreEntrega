@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 import { Alumno } from '../alumnos.component';
+import { HttpClient } from '@angular/common/http';
+import { enviroment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +34,12 @@ export class AlumnosService {
     },
   ])
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
+
+
+  getAlumnosFromDb(): Observable<Alumno[]> {
+    return this.httpClient.get<Alumno[]>(`${enviroment.apiBaseUrl}/alumnos`);
+  }
 
   obtenerAlumnos(): Observable<Alumno[]> {
     return this.estudiantes$.asObservable();

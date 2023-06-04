@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, take } from 'rxjs';
-import { CrearCursoPayload, Curso } from '../models';
+import { BehaviorSubject, Observable, map, take, tap, mergeMap } from 'rxjs';
+import { CrearCursoPayload, Curso, CursoWithMateria } from '../models';
+import { HttpClient } from '@angular/common/http';
+import { enviroment } from 'src/environments/environments';
+
 
 const CURSOS_MOCKS: Curso[] = [
   {
@@ -31,12 +34,21 @@ export class CursosService {
     []
   );
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
   obtenerCursos(): Observable<Curso[]> {
-    this.cursos$.next(CURSOS_MOCKS);
-    return this.cursos$.asObservable();
-  }
+    return this.httpClient
+    .get<Curso[]>(`${enviroment.apiBaseUrl}/cursos?_expand=subject`)
+    .pipe(
+      tap((cursos) => this.cursos$.next(cursos)),
+      mergeMap(() => this.cursos$.asObservable())
+    );
+  };
+
+  obtenerCursosWithMateria(): Observable<CursoWithMateria[]> {
+    return this.httpClient
+    .get<CursoWithMateria[]>(`${enviroment.apiBaseUrl}/cursos?_expand=subject`)
+  };
 
   getCursoById(cursoId: number): Observable<Curso | undefined> {
     return this.cursos$.asObservable()
@@ -64,9 +76,6 @@ export class CursosService {
         error: () => {}
       });
 
-      // then => next
-      // catch => error
-      // finally => complete
 
     return this.cursos$.asObservable();
   }
@@ -76,25 +85,7 @@ export class CursosService {
       .pipe(
         take(1),
       )
-      // .subscribe({
-      //   next: (cursos) => {
 
-      //     const cursosActualizados = cursos.map((curso) => {
-      //       if (curso.id === cursoId) {
-      //         return {
-      //           ...curso,
-      //           ...actualizacion,
-      //         }
-      //       } else {
-      //         return curso;
-      //       }
-      //     })
-
-      //     this.cursos$.next(cursosActualizados);
-      //   },
-      //   complete: () => {},
-      //   error: () => {}
-      // });
 
     return this.cursos$.asObservable();
   }
